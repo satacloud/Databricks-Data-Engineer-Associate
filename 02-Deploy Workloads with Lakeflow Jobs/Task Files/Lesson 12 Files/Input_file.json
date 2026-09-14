@@ -1,0 +1,279 @@
+{
+  "datasets": [
+    {
+      "name": "9a5d019a",
+      "displayName": "customers_sales_summary_gold",
+      "queryLines": [
+        "SELECT * FROM dbacademy.myschema.customers_sales_gold"
+      ]
+    },
+    {
+      "name": "980672f0",
+      "displayName": "customers_orders_va_gold",
+      "queryLines": [
+        "SELECT * FROM dbacademy.myschema.customers_orders_va_gold"
+      ]
+    },
+    {
+      "name": "bd108c4e",
+      "displayName": "customers_orders_ny_gold",
+      "queryLines": [
+        "SELECT * FROM dbacademy.myschema.customers_orders_ny_gold"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "1a15ef90",
+      "displayName": "Main Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "9b34023e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "bd108c4e",
+                  "fields": [
+                    {
+                      "name": "order_week",
+                      "expression": "`order_week`"
+                    },
+                    {
+                      "name": "countdistinct(order_number)",
+                      "expression": "COUNT(DISTINCT `order_number`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "order_week",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "order_week"
+                },
+                "y": {
+                  "fieldName": "countdistinct(order_number)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Count of Unique Orders"
+                }
+              },
+              "frame": {
+                "title": "Order Distribution by Week",
+                "showTitle": false,
+                "showDescription": true,
+                "description": "Count of Unique order per week in NY State"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "f3521084",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "980672f0",
+                  "fields": [
+                    {
+                      "name": "city",
+                      "expression": "`city`"
+                    },
+                    {
+                      "name": "count(is_large_order)",
+                      "expression": "COUNT(`is_large_order`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "city",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "city"
+                },
+                "y": {
+                  "fieldName": "count(is_large_order)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Count of large orders"
+                }
+              },
+              "frame": {
+                "title": "Order Distribution by Week",
+                "showTitle": false,
+                "showDescription": true,
+                "description": "Count of large orders per city in VA State"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bcba4cf7",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "9a5d019a",
+                  "fields": [
+                    {
+                      "name": "sum(total_price)",
+                      "expression": "SUM(`total_price`)"
+                    },
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(total_price)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": " "
+                },
+                "color": {
+                  "fieldName": "product_name",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "Product Name"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "title": "Proportion of Total Sales by Product",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "390dea56",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "9a5d019a",
+                  "fields": [
+                    {
+                      "name": "monthly(order_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `order_date`)"
+                    },
+                    {
+                      "name": "avg(total_price)",
+                      "expression": "AVG(`total_price`)"
+                    },
+                    {
+                      "name": "median(total_price)",
+                      "expression": "MEDIAN(`total_price`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(order_date)",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "order_date"
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "fields": [
+                    {
+                      "fieldName": "avg(total_price)",
+                      "displayName": "Average Order Price"
+                    },
+                    {
+                      "fieldName": "median(total_price)",
+                      "displayName": "Median Order Price"
+                    }
+                  ]
+                },
+                "label": {
+                  "show": false
+                }
+              },
+              "frame": {
+                "showDescription": true,
+                "title": "Average Price per Unit",
+                "showTitle": false,
+                "description": "Average and Median Order Price Per Month in CA State"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 6,
+            "width": 3,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    }
+  }
+}
